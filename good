@@ -1,0 +1,499 @@
+!function () {
+    "use strict";
+    const e = !1;
+    var t = 0;
+    const l = 10;
+    setInterval((function () {
+            (document.querySelector(".geetest_btn_click[aria-label]") && !document.querySelector(".geetest_boxShow") || document.querySelector(".geetest_btn [aria-label]") && !document.querySelector(".geetest_radar_click_ready")) && (t = 0, document.querySelector(".geetest_fullpage_ghost")?.click(), document.querySelector(".geetest_btn_click")?.click(), document.querySelector(".geetest_btn")?.click(), setTimeout((function () {
+                        9 == document.querySelectorAll(".geetest_backimg").length && c(),
+                        document.querySelectorAll(".geetest_ques_back img").length,
+                        5 == document.querySelectorAll(".geetest_item").length && 5 == document.querySelectorAll(".geetest_item")[0].querySelectorAll(".geetest_itemimg").length && i(),
+                        (document.querySelector("div.geetest_slider_button") || document.querySelector("div.geetest_btn")) && o()
+                    }), 5e3))
+        }), 1e4);
+    async function r(e) {
+        return new Promise((t => setTimeout(t, e)))
+    }
+    function a(e) {
+        let t = e.querySelectorAll(".geetest_box");
+        for (let e = 0; e < t.length; e++) {
+            if ("block" === window.getComputedStyle(t[e]).display)
+                return t[e];
+            var l = t[e].children;
+            for (let e = 0; e < l.length; e++) {
+                a(l[e])
+            }
+        }
+    }
+    async function i() {
+        if (!document.querySelector(".geetest_boxShow") && !document.querySelector(".geetest_radar_click_ready"))
+            return;
+        if (t > l)
+            return void console.log("Max Retries Attempted");
+        t > 0 && (document.querySelector(".geetest_refresh")?.click(), await r(3e3));
+        var e = await a(document.querySelector("body"));
+        if (!e)
+            return void console.log("Box not found");
+        let c = new Map;
+        for (let t = 0; t < e.querySelectorAll(".geetest_item").length; t++)
+            for (let l = 0; l < 5; l++) {
+                let r = e.querySelectorAll(".geetest_item")[t].querySelectorAll(".geetest_itemimg")[l]?.style.backgroundImage;
+                if (r) {
+                    let e = t + "," + l;
+                    if (c.has(r)) {
+                        let t = c.get(r);
+                        t.add(e),
+                        c.set(r, t)
+                    } else {
+                        let t = new Set;
+                        t.add(e),
+                        c.set(r, t)
+                    }
+                }
+            }
+        for (let t = 0; t < e.querySelectorAll(".geetest_item").length; t++) {
+            let l = 0,
+            a = "",
+            i = 0,
+            g = 0;
+            var o = new Set;
+            for (let r = 0; r < 5; r++) {
+                let n = e.querySelectorAll(".geetest_item")[t].querySelectorAll(".geetest_itemimg")[r]?.style.backgroundImage;
+                if (n) {
+                    let e = t + "," + r;
+                    if (a) {
+                        if (a != n)
+                            break
+                    } else if (a = n, (o = new Set(c.get(n))).size < 5)
+                        break;
+                    i += 1,
+                    o.delete(e)
+                } else
+                    l += 1, g = t + "," + r;
+                if (l > 1)
+                    break
+            }
+            if (4 == i && 1 == l) {
+                const t = o.values().next().value;
+                e.querySelectorAll(".geetest_item")[Number(t.split(",")[0])].querySelectorAll(".geetest_itemimg")[Number(t.split(",")[1])]?.click(),
+                await r(1e3),
+                e.querySelectorAll(".geetest_item")[Number(g.split(",")[0])].querySelectorAll(".geetest_itemimg")[Number(g.split(",")[1])]?.click()
+            }
+        }
+        for (let t = 0; t < e.querySelectorAll(".geetest_item").length; t++) {
+            let l = 0,
+            a = "",
+            i = 0,
+            g = 0;
+            o = new Set;
+            for (let r = 0; r < 5; r++) {
+                let n = e.querySelectorAll(".geetest_item")[r].querySelectorAll(".geetest_itemimg")[t]?.style.backgroundImage;
+                if (n) {
+                    let e = r + "," + t;
+                    if (a) {
+                        if (a != n)
+                            break
+                    } else if (a = n, (o = new Set(c.get(n))).size < 5)
+                        break;
+                    i += 1,
+                    o.delete(e)
+                } else
+                    l += 1, g = r + "," + t;
+                if (l > 1)
+                    break
+            }
+            if (4 == i && 1 == l) {
+                const t = o.values().next().value;
+                e.querySelectorAll(".geetest_item")[Number(t.split(",")[0])].querySelectorAll(".geetest_itemimg")[Number(t.split(",")[1])]?.click(),
+                await r(1e3),
+                e.querySelectorAll(".geetest_item")[Number(g.split(",")[0])].querySelectorAll(".geetest_itemimg")[Number(g.split(",")[1])]?.click()
+            }
+        }
+        let g = 0,
+        n = "",
+        s = 0,
+        u = 0;
+        o = new Set;
+        for (let t = 0; t < 5; t++) {
+            let l = t,
+            r = e.querySelectorAll(".geetest_item")[l].querySelectorAll(".geetest_itemimg")[t]?.style.backgroundImage;
+            if (r) {
+                let e = l + "," + t;
+                if (n) {
+                    if (n != r)
+                        break
+                } else if (n = r, (o = new Set(c.get(r))).size < 5)
+                    break;
+                s += 1,
+                o.delete(e)
+            } else
+                g += 1, u = l + "," + t;
+            if (g > 1)
+                break
+        }
+        if (4 == s && 1 == g) {
+            const t = o.values().next().value;
+            e.querySelectorAll(".geetest_item")[Number(t.split(",")[0])].querySelectorAll(".geetest_itemimg")[Number(t.split(",")[1])]?.click(),
+            await r(1e3),
+            e.querySelectorAll(".geetest_item")[Number(u.split(",")[0])].querySelectorAll(".geetest_itemimg")[Number(u.split(",")[1])]?.click()
+        }
+        g = 0,
+        n = "",
+        s = 0,
+        u = 0,
+        o = new Set;
+        let m = 5;
+        for (let t = 0; t < 5; t++) {
+            m = 4 - t;
+            let l = e.querySelectorAll(".geetest_item")[t].querySelectorAll(".geetest_itemimg")[m]?.style.backgroundImage;
+            if (l) {
+                let e = t + "," + m;
+                if (n) {
+                    if (n != l)
+                        break
+                } else if (n = l, (o = new Set(c.get(l))).size < 5)
+                    break;
+                s += 1,
+                o.delete(e)
+            } else
+                g += 1, u = t + "," + m;
+            if (g > 1)
+                break
+        }
+        if (4 == s && 1 == g) {
+            const t = o.values().next().value;
+            e.querySelectorAll(".geetest_item")[Number(t.split(",")[0])].querySelectorAll(".geetest_itemimg")[Number(t.split(",")[1])]?.click(),
+            await r(1e3),
+            e.querySelectorAll(".geetest_item")[Number(u.split(",")[0])].querySelectorAll(".geetest_itemimg")[Number(u.split(",")[1])]?.click()
+        }
+        await r(5e3),
+        i()
+    }
+    async function c() {
+        if (!document.querySelector(".geetest_boxShow") && !document.querySelector(".geetest_radar_click_ready"))
+            return;
+        if (t > l)
+            return void console.log("Max Retries Attempted");
+        t > 0 && (document.querySelector(".geetest_refresh")?.click(), await r(3e3));
+        var e = await a(document.querySelector("body"));
+        if (e) {
+            var i = [];
+            for (let t = 0; t < e.querySelectorAll(".geetest_backimg").length; t++) {
+                let l = ".geetest_img-" + t;
+                i[t] = e.querySelectorAll(".geetest_backimg")[t].querySelector(l)?.style.backgroundImage
+            }
+            9 != i.length && console.log("length is less");
+            for (var o = 0; o <= 2; ) {
+                if (i[0 + o] === i[3 + o] && i[6 + o + 1] === i[3 + o]) {
+                    e.querySelectorAll(".geetest_backimg")[6 + o + 1]?.click(),
+                    await r(1e3),
+                    e.querySelectorAll(".geetest_backimg")[6 + o]?.click();
+                    break
+                }
+                if (i[0 + o] === i[3 + o] && i[6 + o - 1] === i[3 + o]) {
+                    e.querySelectorAll(".geetest_backimg")[6 + o - 1]?.click(),
+                    await r(1e3),
+                    e.querySelectorAll(".geetest_backimg")[6 + o]?.click();
+                    break
+                }
+                if (i[0 + o + 1] === i[3 + o] && i[6 + o] === i[0 + o + 1]) {
+                    e.querySelectorAll(".geetest_backimg")[0 + o + 1]?.click(),
+                    await r(1e3),
+                    e.querySelectorAll(".geetest_backimg")[0 + o]?.click();
+                    break
+                }
+                if (i[0 + o - 1] === i[3 + o] && i[6 + o] === i[0 + o - 1]) {
+                    e.querySelectorAll(".geetest_backimg")[0 + o - 1]?.click(),
+                    await r(1e3),
+                    e.querySelectorAll(".geetest_backimg")[0 + o]?.click();
+                    break
+                }
+                if (i[0 + o] === i[3 + o + 1] && i[6 + o] === i[3 + o + 1]) {
+                    e.querySelectorAll(".geetest_backimg")[3 + o + 1]?.click(),
+                    await r(1e3),
+                    e.querySelectorAll(".geetest_backimg")[3 + o]?.click();
+                    break
+                }
+                if (i[0 + o] === i[3 + o - 1] && i[6 + o] === i[3 + o - 1]) {
+                    e.querySelectorAll(".geetest_backimg")[3 + o - 1]?.click(),
+                    await r(1e3),
+                    e.querySelectorAll(".geetest_backimg")[3 + o]?.click();
+                    break
+                }
+                o += 1
+            }
+            for (o = 0; o <= 6; ) {
+                if (i[0 + o] === i[1 + o] && i[2 + o + 3] === i[0 + o]) {
+                    e.querySelectorAll(".geetest_backimg")[2 + o + 3]?.click(),
+                    await r(1e3),
+                    e.querySelectorAll(".geetest_backimg")[2 + o]?.click();
+                    break
+                }
+                if (i[0 + o] === i[1 + o] && i[2 + o - 3] === i[0 + o]) {
+                    e.querySelectorAll(".geetest_backimg")[2 + o - 3]?.click(),
+                    await r(1e3),
+                    e.querySelectorAll(".geetest_backimg")[2 + o]?.click();
+                    break
+                }
+                if (i[0 + o + 3] === i[1 + o] && i[2 + o] === i[0 + o + 3]) {
+                    e.querySelectorAll(".geetest_backimg")[0 + o + 3]?.click(),
+                    await r(1e3),
+                    e.querySelectorAll(".geetest_backimg")[0 + o]?.click();
+                    break
+                }
+                if (i[0 + o - 3] === i[1 + o] && i[2 + o] === i[0 + o - 3]) {
+                    e.querySelectorAll(".geetest_backimg")[0 + o - 3]?.click(),
+                    await r(1e3),
+                    e.querySelectorAll(".geetest_backimg")[0 + o]?.click();
+                    break
+                }
+                if (i[0 + o] === i[1 + o + 3] && i[2 + o] === i[0 + o]) {
+                    e.querySelectorAll(".geetest_backimg")[1 + o + 3]?.click(),
+                    await r(1e3),
+                    e.querySelectorAll(".geetest_backimg")[1 + o]?.click();
+                    break
+                }
+                if (i[0 + o] === i[1 + o - 3] && i[2 + o] === i[0 + o]) {
+                    e.querySelectorAll(".geetest_backimg")[1 + o - 3]?.click(),
+                    await r(1e3),
+                    e.querySelectorAll(".geetest_backimg")[1 + o]?.click();
+                    break
+                }
+                o += 3
+            }
+            await r(5e3),
+            c()
+        } else
+            console.log("Box not found")
+    }
+    async function o() {
+        if (!document.querySelector(".geetest_boxShow") && !document.querySelector(".geetest_radar_click_ready"))
+            return;
+        if (t > l)
+            return void console.log("Max Retries Attempted");
+        t > 0 && (document.querySelector(".geetest_refresh_1")?.click(), await r(3e3));
+        let e = [];
+        if (document.querySelectorAll(".geetest_canvas_img canvas").length >= 2) {
+            console.log("Solving..");
+            for (let t = 0; t < 2; t++)
+                e[t] = await document.querySelectorAll(".geetest_canvas_img canvas")[t].toDataURL().replace(/^data:image\/\w+;base64,/, ""), await r(2e3);
+            e[1] = await y(e[1]);
+            let t = await g(e);
+            if (0 == t)
+                return document.querySelector(".geetest_refresh_1")?.click(), await r(5e3), o();
+            let l = -2;
+            document.querySelector(".geetest_voice[aria-label]") && (l = -22, console.log(Number(l))),
+            s(t + l, document.querySelector("body"))
+        } else {
+            if (!document.querySelector(".geetest_bg") || !document.querySelector(".geetest_slice_bg"))
+                return void console.log("Captcha cannot be solved");
+            var i = await a(document.querySelector("body"));
+            if (!i)
+                return void console.log("Box not found");
+            console.log("Solving..");
+            let t = await b(i.querySelector(".geetest_boxShow .geetest_bg")?.style.backgroundImage),
+            l = await b(i.querySelector(".geetest_boxShow .geetest_slice_bg")?.style.backgroundImage);
+            e[0] = await S(t),
+            e[1] = await S(l),
+            e[1] = await y(e[1]);
+            let c = await g(e),
+            n = -12;
+            if (0 == c)
+                return i.querySelector(".geetest_refresh")?.click(), await r(5e3), o();
+            s(c + n, i)
+        }
+        t += 1
+    }
+    async function g(t) {
+        return await new Promise((l => {
+                let r = new Image,
+                a = new Image;
+                r.onload = function () {
+                    a.onload = function () {
+                        let t = document.createElement("canvas"),
+                        i = t.getContext("2d");
+                        t.width = r.width,
+                        t.height = r.height,
+                        i.drawImage(r, 0, 0);
+                        let c = i.getImageData(0, 0, r.width, r.height);
+                        i.clearRect(0, 0, t.width, t.height),
+                        i.drawImage(a, 0, 0);
+                        let o = i.getImageData(0, 0, a.width, a.height);
+                        i.clearRect(0, 0, t.width, t.height);
+                        let g = function (e, t) {
+                            const l = e.data.length / (e.width * e.height),
+                            r = e.width,
+                            a = e.height,
+                            i = t.width,
+                            c = t.height,
+                            o = l,
+                            g = l;
+                            let n = {
+                                maxVal: -1 / 0,
+                                minVal: 1 / 0,
+                                maxLoc: {
+                                    x: 0,
+                                    y: 0
+                                }
+                            };
+                            for (let l = 0; l < a - c; l++)
+                                for (let a = 0; a < r - i; a++) {
+                                    let s = 0;
+                                    for (let u = 0; u < c; u++) {
+                                        for (let c = 0; c < i; c++) {
+                                            let m = (l + u) * r * o + (a + c) * o,
+                                            d = u * i * g + c * g,
+                                            y = e.data[m],
+                                            b = e.data[m + 1],
+                                            S = e.data[m + 2],
+                                            _ = t.data[d],
+                                            f = t.data[d + 1],
+                                            k = t.data[d + 2];
+                                            if ((0 !== _ || 0 !== f || 0 !== k || 0 !== t.data[d + 3]) && (s += (y > _ ? y - _ : _ - y) + (b > f ? b - f : f - b) + (S > k ? S - k : k - S), s > n.minVal))
+                                                break
+                                        }
+                                        if (s > n.minVal)
+                                            break
+                                    }
+                                    s < n.minVal && (n.minVal = s, n.maxLoc.x = a, n.maxLoc.y = l)
+                                }
+                            return n
+                        }
+                        (c, o);
+                        if (!g)
+                            return void l(0);
+                        let n = g.maxLoc.x;
+                        if (n) {
+                            if (e) {
+                                t.id = "canvasOutput",
+                                document.getElementById("canvasOutput") || document.body.appendChild(t);
+                                let e = document.getElementById("canvasOutput").getContext("2d");
+                                e.clearRect(0, 0, t.width, t.height),
+                                i.drawImage(r, 0, 0);
+                                let l = "rgb(255, 0, 0)";
+                                g.maxLoc.x,
+                                o.width,
+                                g.maxLoc.y,
+                                o.height;
+                                i.strokeStyle = l,
+                                i.lineWidth = 2,
+                                i.beginPath(),
+                                i.rect(g.maxLoc.x, g.maxLoc.y, o.width, o.height),
+                                i.closePath(),
+                                i.stroke(),
+                                e.drawImage(i.canvas, 0, 0)
+                            }
+                            l(n)
+                        } else
+                            l(0)
+                    },
+                    a.src = "data:image/png;base64," + t[1]
+                },
+                r.src = "data:image/png;base64," + t[0]
+            }))
+    }
+    function n(e, t) {
+        return new MouseEvent(e, {
+            view: window,
+            bubbles: !0,
+            cancelable: !1,
+            clientX: t,
+            clientY: 0
+        })
+    }
+    function s(e, t) {
+        let l = 0,
+        r = t.querySelector("div.geetest_slider_button") || t.querySelector("div.geetest_btn");
+        r.dispatchEvent(n("mousedown", 0));
+        let a = setInterval((() => {
+                    l += 2,
+                    l >= e && (clearInterval(a), setTimeout((function () {
+                                o()
+                            }), 5e3), r.dispatchEvent(n("mouseup", l))),
+                    r.dispatchEvent(n("mousemove", l))
+                }), 50)
+    }
+    var u = 0,
+    m = 0,
+    d = 0;
+    async function y(e) {
+        return e = await async function (e) {
+            return await new Promise((t => {
+                    e = "data:image/png;base64," + e;
+                    const l = document.createElement("canvas"),
+                    r = l.getContext("2d"),
+                    a = new Image;
+                    a.src = e,
+                    a.onload = function () {
+                        l.width = a.width,
+                        l.height = a.height,
+                        r.drawImage(a, 0, 0);
+                        const e = r.getImageData(0, 0, l.width, l.height),
+                        i = e.data;
+                        for (let e = 0; e < i.length; e += 4) {
+                            i[e],
+                            i[e + 1],
+                            i[e + 2];
+                            const t = i[e + 3];
+                            u < i[e] && (u = i[e]),
+                            m < i[e + 1] && (m = i[e + 1]),
+                            d < i[e + 2] && (d = i[e + 2]),
+                            t < 100 ? (i[e] = 0, i[e + 1] = 0, i[e + 2] = 0, i[e + 3] = 0) : (i[e] = Number(i[e] / 1.67), i[e + 1] = Number(i[e + 1] / 1.67), i[e + 2] = Number(i[e + 2] / 1.67), i[e + 3] = 255)
+                        }
+                        r.putImageData(e, 0, 0),
+                        t(l.toDataURL().replace(/^data:image\/\w+;base64,/, ""))
+                    }
+                }))
+        }
+        (e),
+        await new Promise((t => {
+                var l = "data:image/png;base64," + e,
+                r = new Image;
+                r.onload = function () {
+                    var e = Math.max(r.width, r.height) + 0,
+                    l = document.createElement("canvas"),
+                    a = l.getContext("2d");
+                    l.width = e,
+                    l.height = e,
+                    a.clearRect(0, 0, l.width, l.height),
+                    a.drawImage(r, 0, 0);
+                    for (var i = a.getImageData(0, 0, r.width, r.height).data, c = r.width, o = r.height, g = 0, n = 0, s = 0; s < r.height; s++)
+                        for (var u = 0; u < r.width; u++) {
+                            var m = 4 * (s * r.width + u),
+                            d = i[m],
+                            y = i[m + 1],
+                            b = i[m + 2],
+                            S = i[m + 3];
+                            0 === d && 0 === y && 0 === b && 0 === S || (u < c && (c = u), s < o && (o = s), u > g && (g = u), s > n && (n = s))
+                        }
+                    var _ = g - c + 1,
+                    f = n - o + 1,
+                    k = document.createElement("canvas"),
+                    h = k.getContext("2d");
+                    k.width = _ + 0,
+                    k.height = f + 0,
+                    h.clearRect(0, 0, k.width, k.height),
+                    h.drawImage(r, c - 0, o - 0, _ + 0, f + 0, 0, 0, _ + 0, f + 0),
+                    t(k.toDataURL().replace(/^data:image\/\w+;base64,/, ""))
+                },
+                r.src = l
+            }))
+    }
+    function b(e) {
+        var t = e.substring(e.indexOf('"') + 1, e.lastIndexOf('"'));
+        return t && t.includes("https") ? t : 0
+    }
+    async function S(e) {
+        let t = await fetch(e),
+        l = await t.blob();
+        return new Promise((e => {
+                let t = new FileReader;
+                t.readAsDataURL(l),
+                t.onloadend = () => {
+                    let l = t.result.replace(/^data:image\/\w+;base64,/, "");
+                    e(l)
+                }
+            }))
+    }
+}
+();
